@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if ! $(wp core is-installed); then
+
+    wp core download --path=wordpress/ --locale=fr_FR
+    wp core config --dbhost=reseau.nuitdebout.dev --dbname=nuitdebout --dbuser=root --dbpass=leurfairepeur --locale=fr_FR
+    wp core install --url=reseau.nuitdebout.dev --title="Réseau NuitDebout" --admin_user=admin --admin_password=admin --admin_email=admin@reseau.nuitdebout.dev --skip-email
+    wp option update users_can_register 1
+    wp plugin install buddypress --activate
+
+    cd theme/
+    npm install
+    bower install
+
+fi
