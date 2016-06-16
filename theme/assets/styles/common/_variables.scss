@@ -7,3 +7,12 @@ $sidebar-sm-columns:    4;
 
 // Colors
 $brand-primary:         #27ae60;
+
+$font-family-sans-serif: 'Work Sans', sans-serif;
+
+
+$admin-bar-height: 60px;
+$admin-bar-line-height-computed: 32px;
+$admin-bar-padding-vertical: (($admin-bar-height - $admin-bar-line-height-computed) / 2);
+
+$footer-height: 60px;

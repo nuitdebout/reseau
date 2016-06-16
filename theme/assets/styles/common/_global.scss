@@ -1,1 +1,81 @@
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 
+@font-face {
+  font-family: 'Commune';
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/Commune-B1San31-NuitDebout.otf") format("opentype");
+}
+
+#wpadminbar {
+  height: $admin-bar-height;
+  .quicklinks > ul > li > a,
+  .quicklinks li#wp-admin-bar-bp-notifications > a {
+    padding: $admin-bar-padding-vertical 32px;
+  }
+  .quicklinks li#wp-admin-bar-bp-notifications > a {
+    // border-left: 1px solid lightgrey;
+    // border-right: 1px solid lightgrey;
+  }
+  #wp-admin-bar-search .ab-item {
+    padding: $admin-bar-padding-vertical 32px;
+  }
+  #wp-admin-bar-homepage-link {
+    > a {
+      font-family: Commune;
+      text-transform: uppercase;
+      font-size: 42px;
+      line-height: 42px;
+    }
+  }
+}
+
+#notifications-sort-order,
+#activity-filter-select,
+#members-order-select,
+#groups-order-select {
+  @extend .form-inline;
+  select {
+    @extend .form-control;
+  }
+}
+
+/**
+ * Conflict with Bootstrap's .label
+ */
+
+#buddypress table.forum tr td.label,
+#buddypress table.messages-notices tr td.label,
+#buddypress table.notifications tr td.label,
+#buddypress table.notifications-settings tr td.label,
+#buddypress table.profile-fields tr td.label,
+#buddypress table.wp-profile-fields tr td.label {
+  display: table-cell;
+  font-size: $font-size-base;
+  color: $text-color;
+  text-align: left;
+  white-space: normal;
+  vertical-align: middle;
+  border-radius: 0;
+}
+
+body {
+  padding-top: $admin-bar-height;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 $footer-height; /* bottom = footer height */
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: $footer-height;
+    width: 100%;
+}

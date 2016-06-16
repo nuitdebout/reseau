@@ -47,6 +47,9 @@ function setup() {
   // Use main stylesheet for visual editor
   // To add custom styles edit /assets/styles/layouts/_tinymce.scss
   add_editor_style(Assets\asset_path('styles/main.css'));
+
+  // Remove the default padding styles from WordPress for the Toolbar
+  add_theme_support('admin-bar', array('callback' => '__return_false'));
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
@@ -84,8 +87,9 @@ function display_sidebar() {
     // The sidebar will NOT be displayed if ANY of the following return true.
     // @link https://codex.wordpress.org/Conditional_Tags
     is_404(),
-    is_front_page(),
-    is_page_template('template-custom.php'),
+    // is_front_page(),
+    // is_page_template('template-custom.php'),
+    true,
   ]);
 
   return apply_filters('sage/display_sidebar', $display);
@@ -104,3 +108,26 @@ function assets() {
   wp_enqueue_script('sage/js', Assets\asset_path('scripts/main.js'), ['jquery'], null, true);
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\assets', 100);
+
+/**
+ * Change Toolbar for normal users
+ */
+function modify_toolbar() {
+  global $wp_admin_bar;
+
+  if (!current_user_can('administrator')) {
+    $wp_admin_bar->remove_menu('wp-logo');
+    $wp_admin_bar->remove_menu('site-name');
+    $wp_admin_bar->remove_menu('new-content');
+    $wp_admin_bar->remove_menu('edit');
+
+    $args = array(
+      'id'    => 'homepage-link',
+      'title' => 'Nuit Debout',
+      'href'  => get_home_url(),
+      'meta'  => ['class' => '']
+    );
+    $wp_admin_bar->add_node( $args );
+  }
+}
+add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\modify_toolbar');
