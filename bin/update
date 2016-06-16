@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+while read plugin_name
+do
+   wp plugin install $plugin_name --activate
+done < conf/plugins
+
+cd theme/
+composer update
+npm install
+bower install

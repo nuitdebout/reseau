@@ -5,10 +5,19 @@ if ! $(wp core is-installed); then
     wp core download --path=wordpress/ --locale=fr_FR
     wp core config --dbhost=reseau.nuitdebout.dev --dbname=nuitdebout --dbuser=root --dbpass=leurfairepeur --locale=fr_FR
     wp core install --url=reseau.nuitdebout.dev --title="Réseau NuitDebout" --admin_user=admin --admin_password=admin --admin_email=admin@reseau.nuitdebout.dev --skip-email
+
+    # Makes sure BuddyPress pages are created
     wp option update users_can_register 1
-    wp plugin install buddypress --activate
+    wp plugin install buddypress --version=dev --activate
+    wp option update users_can_register 0
+
+    while read plugin_name
+    do
+       wp plugin install $plugin_name --activate
+    done < conf/plugins
 
     cd theme/
+    composer install
     npm install
     bower install
 
